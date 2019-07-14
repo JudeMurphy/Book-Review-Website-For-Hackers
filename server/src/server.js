@@ -1,8 +1,9 @@
 /*jshint esversion: 9 */
 
-import { graphqlExpress, graphiqlExpress } from 'apollo-server-express';
-import { makeExecutableSchema } from 'graphql-tools';
 import { graphql } from 'graphql';
+import { makeExecutableSchema } from 'graphql-tools';
+import { graphqlExpress, graphiqlExpress } from 'apollo-server-express';
+
 import cors from 'cors';
 import express from 'express';
 import bodyParser from 'body-parser';
