@@ -1,19 +1,27 @@
-/*jshint esversion: 6 */
-
-import { allBooks, imageURL, findBookById } from './book';
-import { authorsByBookId } from './author';
-import { allReviews } from './review';
-import { allUsers } from './user';
-
 import gravatar from 'gravatar';
+import { 
+  allBooks, 
+  imageUrl, 
+  findBookById, 
+  searchBook,
+  createBook
+ } from './book';
+import { authorsByBookId } from './author';
+import { allReviews, createReview } from './review'; 
+import { search } from './search'; 
 
 const resolvers = {
-  // Resolvers for when information is in another table
   User: {
-    imageURL: (user, args) => gravatar.url(user.email, { s: args.size }),
+    imageUrl: (user, args) => gravatar.url(user.email, { s: args.size }),
+  },
+  SearchBookResult: {
+    imageUrl: (result, args) => imageUrl(args.size, result.id),
+  },
+  SearchResult: {
+    __resolveType: obj => obj.__type,
   },
   Book: {
-    imageURL: (book, { size }) => imageURL(size, book.googleId),
+    imageUrl: (book, { size }) => imageUrl(size, book.googleId),
     authors: (book, args, context) => {
       const { loaders } = context;
       const { findAuthorsByBookIdsLoader } = loaders;
@@ -25,39 +33,49 @@ const resolvers = {
       return findReviewsByBookIdsLoader.load(book.id);
     }
   },
-
   Review: {
     book: (review, args, context) => {
       const { loaders } = context;
       const { findBooksByIdsLoader } = loaders;
       return findBooksByIdsLoader.load(review.bookId);
     },
-
     user: (review, args, context) => {
       const { loaders } = context;
       const { findUsersByIdsLoader } = loaders;
       return findUsersByIdsLoader.load(review.userId);
-      //return findUserById(review.userId);
-    }
-  },
-
-  // Base Queries for getting all records
-  Query: {
-    book: (root, args, context) => {
-      const { loaders } = context;
-      const { findBooksByIdsLoader } = loaders;
-      return findBooksByIdsLoader.load(args.id);
     },
+  },
+  Query: {
     books: (root, args) => {
       return allBooks(args);
     },
     reviews: (root, args) => {
       return allReviews(args);
     },
-    users: () => {
-      return allUsers();
+    book: (root, args, context) => {
+      const { loaders } = context;
+      const { findBooksByIdsLoader } = loaders;
+      return findBooksByIdsLoader.load(args.id);
     },
+    searchBook: (root, args) => {
+      const { query } = args;
+      return searchBook(query);
+    },
+    search: (root, args) => {
+      const { query } = args;
+      return search(query);
+    }
   },
+  Mutation: {
+    createReview: (root, args) => {
+      const { reviewInput } = args;
+      return createReview(reviewInput);
+    },
+    createBook: (root, args) => {
+      const { googleBookId } = args;
+      return createBook(googleBookId);
+    }
+  }
 };
 
 export default resolvers;

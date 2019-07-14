@@ -1,12 +1,40 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
-import * as R from 'rambda';
+import * as R from 'ramda';
 import * as EmailValidator from 'email-validator';
 import { Book, BookReviewForm } from './components/Book';
 import Error from './components/Error';
 import data from './data';
+import fetch from './fetch';
 
 const findBookById = (id, books) => R.find(R.propEq('id', id), books);
+
+const query = `
+fragment Book on Book {
+  id
+  title
+  description
+  imageUrl
+  rating
+}
+
+query Book($id: ID!) {
+  book(id: $id){
+    ...Book
+    authors{
+      name
+    }
+  }
+}
+`;
+
+const createReviewMutation = `
+mutation CreateReview($reviewInput: ReviewInput!){
+  createReview(reviewInput: $reviewInput){
+    id
+  }
+}
+`;
 
 const isInputValid = reviewInput => {
   const { count, name, email } = reviewInput;
@@ -32,8 +60,11 @@ class BookReview extends Component {
     const id = R.path(['props', 'match', 'params', 'id'], this);
     try {
       // TODO: fetch actual book using graphql
-      const book = findBookById(id, data.books);
-      const errors = [];
+      const variables = { id };
+      const result = await fetch({ query, variables });
+      const book = R.path(['data', 'book'], result);
+      const errorList = R.pathOr([], ['errors'], result);
+      const errors = R.map(error => error.message, errorList);
       this.setState({ book, errors });
     } catch (err) {
       this.setState({ errors: [err.message] });
@@ -53,9 +84,25 @@ class BookReview extends Component {
     const { name, count, email, title, comment } = reviewInput;
     // TODO: add actual mutation to add new review
     try {
-      const errors = [];
-      this.setState({ redirect: true, errors });
-    } catch (err) {}
+      const variables = {
+        reviewInput: {
+          bookId: book.id,
+          rating: count,
+          name,
+          email,
+          title,
+          comment,
+        },
+      };
+      const result = await fetch({ query: createReviewMutation, variables });
+      const id = R.path(['data', 'createReview', 'id'], result);
+      const errorList = R.pathOr([], ['errors'], result);
+      const errors = R.map(error => error.message, errorList);
+      const redirect = !!id;
+      this.setState({ redirect, errors });
+    } catch (err) {
+      this.setState({ errors: [err.message] });
+    }
   };
   render() {
     const { book, reviewInput, inputValid, redirect } = this.state;

@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import * as R from 'rambda';
+import * as R from 'ramda';
 import { BookListSection, SORT_BY } from './components/Book';
 import Error from './components/Error';
 import { RecentReviewSection } from './components/Review';
+import data from './data/';
 import fetch from './fetch';
 
 const query = `
@@ -23,22 +24,23 @@ fragment Review on Review {
   }
 }
 
-query Home($orderBy: BooksOrderBy) {
-  reviews{
+query Home($orderBy: BooksOrderBy!) {
+  reviews {
     ...Review
     book {
-    	...Book
-    	imageURL(size: LARGE)
+      ...Book
+      imageUrl(size: SMALL)
     }
   }
   books (orderBy: $orderBy) {
     ...Book
-    imageURL
-    authors{
+    imageUrl
+    authors {
       name
     }
   }
-}`;
+}
+`;
 
 class Home extends Component {
   state = {
@@ -56,11 +58,14 @@ class Home extends Component {
   async loadData() {
     try {
       // TODO: query actual books and reviews from graphql
+      // const books = data.books;
+      // const reviews = data.reviews;
+      // const errors = [];
       // eslint-disable-next-line
       const { orderBy } = this.state;
       const variables = { orderBy };
-
       const result = await fetch({ query, variables });
+      // const books = result.data.books;
       const books = R.path(['data', 'books'], result);
       const reviews = R.path(['data', 'reviews'], result);
       const errorList = R.pathOr([], ['errors'], result);

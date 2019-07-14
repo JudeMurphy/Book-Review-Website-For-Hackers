@@ -1,21 +1,17 @@
-/*jshint esversion: 9 */
-
-// Used To Convert From Snake To Camelcase
+import { Pool } from 'pg';
 import humps from 'humps';
 
-import { Pool } from 'pg';
 const pool = new Pool({
   host: 'localhost',
   database: 'hackerbook',
 });
 
-// Need To Log Query For Debugging
 function logQuery (sql, params) {
-  console.log('\nBEGIN -----');
+  console.log('BEGIN-------------------------------------');
   console.log('SQL:', sql);
-  console.log('PARAMS', JSON.stringify(params));
-  console.log('END -----');
-}
+  console.log('PARAMS:', JSON.stringify(params));
+  console.log('END---------------------------------------');
+};
 
 async function query(sql, params) {
   const client = await pool.connect();

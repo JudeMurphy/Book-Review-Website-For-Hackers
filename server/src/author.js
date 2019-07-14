@@ -1,12 +1,10 @@
-/*jshint esversion: 9 */
-
-import { groupBy, map } from 'rambda';
+import { groupBy, map } from 'ramda';
 import DataLoader from 'dataloader';
 import query from './db';
 
 export async function findAuthorsByBookIds(ids) {
   const sql = `
-  select
+  select 
   hb.author.*,
   hb.book_author.book_id
   from hb.author inner join hb.book_author
@@ -30,12 +28,12 @@ export function findAuthorsByBookIdsLoader() {
 
 export async function authorsByBookId(id) {
   const sql = `
-  select hb.author.*
+  select 
+  hb.author.*
   from hb.author inner join hb.book_author
-  on hb.author.id = hb.book_author.author_id
-  where hb.book_author.book_id = $1
+    on hb.author.id = hb.book_author.author_id
+  where hb.book_author.book_id = $1;
   `;
-
   const params = [id];
   try {
     const result = await query(sql, params);
