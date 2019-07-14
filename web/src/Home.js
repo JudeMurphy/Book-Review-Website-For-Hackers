@@ -3,7 +3,6 @@ import * as R from 'rambda';
 import { BookListSection, SORT_BY } from './components/Book';
 import Error from './components/Error';
 import { RecentReviewSection } from './components/Review';
-import data from './data/';
 import fetch from './fetch';
 
 const query = `
@@ -29,7 +28,7 @@ query Home($orderBy: BooksOrderBy) {
     ...Review
     book {
     	...Book
-    	imageURL(size: SMALL)
+    	imageURL(size: LARGE)
     }
   }
   books (orderBy: $orderBy) {

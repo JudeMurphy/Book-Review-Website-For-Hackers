@@ -6,9 +6,10 @@ schema {
 }
 
 type Query {
-  books(orderBy: BooksOrderBy = RATING_DESC): [Book]
   reviews(orderBy: ReviewsOrderBy = ID_ASC): [Review]
+  books(orderBy: BooksOrderBy = RATING_DESC): [Book]
   users: [User]
+  book(id: ID!): Book
 }
 
 type Review {
@@ -29,12 +30,14 @@ type Book {
   subtitle: String
   ratingCount: Int
   authors: [Author]
+  reviews: [Review]
 }
 
 type User {
   id: ID!
   email: String!
   name: String!
+  imageURL(size: Int = 50): String
 }
 
 type Author {

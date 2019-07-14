@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import * as R from 'ramda';
+import * as R from 'rambda';
 import { BookDetail } from './components/Book';
 import { BookDetailReviews } from './components/Book';
 import Error from './components/Error';
