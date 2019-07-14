@@ -9,7 +9,7 @@ const resolvers = {
   Query: {
     books: () => {
       return allBooks();
-    }
+    },
   },
 };
 

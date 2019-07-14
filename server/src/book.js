@@ -1,10 +1,12 @@
-/*jshint esversion: 8 */
+/*jshint esversion: 9 */
+
 import query from './db';
 
 export async function allBooks() {
   const sql = `
   select * from hb.book;
   `;
+
   try {
     const result = await query(sql);
     return result.rows;
