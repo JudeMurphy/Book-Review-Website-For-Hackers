@@ -6,6 +6,7 @@ import { allReviews } from './review';
 import { allUsers } from './user';
 
 const resolvers = {
+  // Resolvers for when information is in another table
   Book: {
     imageURL: (book, { size }) => imageURL(size, book.googleId),
     authors: (book, args, context) => {
@@ -21,7 +22,7 @@ const resolvers = {
       const { findBooksByIdsLoader } = loaders;
       return findBooksByIdsLoader.load(review.bookId);
     },
-    
+
     user: (review, args, context) => {
       const { loaders } = context;
       const { findUsersByIdsLoader } = loaders;
@@ -32,11 +33,11 @@ const resolvers = {
 
   // Base Queries for getting all records
   Query: {
-    books: () => {
-      return allBooks();
+    books: (root, args) => {
+      return allBooks(args);
     },
-    reviews: () => {
-      return allReviews();
+    reviews: (root, args) => {
+      return allReviews(args);
     },
     users: () => {
       return allUsers();

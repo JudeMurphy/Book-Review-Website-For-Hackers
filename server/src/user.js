@@ -4,7 +4,7 @@ import { map, groupBy } from 'ramda';
 import DataLoader from 'dataloader';
 import query from './db';
 
-// Use Data Loader to optimize SQL Query
+// Use Data Loader to optimize Query
 async function findUsersByIds(ids) {
   const sql = `
   select *

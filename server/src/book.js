@@ -1,6 +1,6 @@
 /*jshint esversion: 9 */
 
-import { map, groupBy } from 'ramda';
+import { map, groupBy } from 'rambda';
 import DataLoader from 'dataloader';
 import query from './db';
 
@@ -64,7 +64,7 @@ export async function allBooks(args) {
   }
 }
 
-export function imageUrl(size, id) {
+export function imageURL(size, id) {
   const zoom = size === 'SMALL' ? 1 : 0;
   return `//books.google.com/books/content?id=${id}&printsec=frontcover&img=1&zoom=${zoom}&source=gbs_api`;
 }

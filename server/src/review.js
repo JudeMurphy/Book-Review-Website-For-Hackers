@@ -2,10 +2,17 @@
 
 import query from './db';
 
-export async function allReviews() {
+const ORDER_BY = {
+  ID_DESC: 'id desc',
+  ID_ASC: 'id asc',
+};
+
+export async function allReviews(args) {
+  const orderBy = ORDER_BY[args.orderBy];
   const sql = `
   select *
   from hb.review
+  order by ${orderBy};
   `;
 
   try {
