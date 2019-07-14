@@ -3,6 +3,7 @@
 import { graphql } from 'graphql';
 import { makeExecutableSchema } from 'graphql-tools';
 import { graphqlExpress, graphiqlExpress } from 'apollo-server-express';
+import { findAuthorsByBookIdsLoader } from './author';
 
 import cors from 'cors';
 import express from 'express';
@@ -17,7 +18,18 @@ const schema = makeExecutableSchema({ typeDefs, resolvers });
 // Start with npm run dev
 const app = express();
 app.use(cors());
-app.use("/graphql", bodyParser.json(), graphqlExpress({ schema }));
+
+app.use("/graphql",
+  bodyParser.json(),
+  graphqlExpress(() => ({
+    schema,
+    context: {
+      loaders: {
+        findAuthorsByBookIdsLoader: findAuthorsByBookIdsLoader()
+      }
+    }
+  })));
+
 app.use('/graphiql', graphiqlExpress ({ endpointURL: '/graphql'}));
 
 app.listen(4000, () => {
