@@ -1,6 +1,6 @@
 /*jshint esversion: 9 */
 
-import { groupBy, map } from 'ramda';
+import { groupBy, map } from 'rambda';
 import DataLoader from 'dataloader';
 import query from './db';
 

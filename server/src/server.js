@@ -3,12 +3,12 @@
 import { graphql } from 'graphql';
 import { makeExecutableSchema } from 'graphql-tools';
 import { graphqlExpress, graphiqlExpress } from 'apollo-server-express';
-import { findAuthorsByBookIdsLoader } from './author';
 
 import cors from 'cors';
 import express from 'express';
 import bodyParser from 'body-parser';
 
+import loaders from './loader';
 import typeDefs from './typeDefs';
 import resolvers from './resolvers';
 
@@ -24,9 +24,7 @@ app.use("/graphql",
   graphqlExpress(() => ({
     schema,
     context: {
-      loaders: {
-        findAuthorsByBookIdsLoader: findAuthorsByBookIdsLoader()
-      }
+      loaders: loaders()
     }
   })));
 
