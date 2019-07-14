@@ -3,7 +3,7 @@
 import { allBooks, imageURL, findBookById } from './book';
 import { authorsByBookId } from './author';
 import { allReviews } from './review';
-import { allUsers, findUserById } from './user';
+import { allUsers } from './user';
 
 const resolvers = {
   Book: {
@@ -21,14 +21,13 @@ const resolvers = {
       const { findBooksByIdsLoader } = loaders;
       return findBooksByIdsLoader.load(review.bookId);
     },
-    user: (review) => {
-      return findUserById(review.userId);
-    }
-    /*user: (review, args, context) => {
+    
+    user: (review, args, context) => {
       const { loaders } = context;
-      const { findBooksByIdsLoader } = loaders;
-      return findUsersByIdsLoader.load(review.name);
-    },*/
+      const { findUsersByIdsLoader } = loaders;
+      return findUsersByIdsLoader.load(review.userId);
+      //return findUserById(review.userId);
+    }
   },
 
   // Base Queries for getting all records
