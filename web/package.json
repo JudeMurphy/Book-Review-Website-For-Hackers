@@ -5,6 +5,7 @@
   "dependencies": {
     "classnames": "^2.2.5",
     "email-validator": "^1.1.1",
+    "rambda": "^2.11.2",
     "ramda": "^0.25.0",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",

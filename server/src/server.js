@@ -1,22 +1,22 @@
-import express from 'express';
 import { graphqlExpress, graphiqlExpress } from 'apollo-server-express';
-import cors from 'cors';
-import bodyParser from 'body-parser';
 import { makeExecutableSchema } from 'graphql-tools';
 import { graphql } from 'graphql';
-import typeDefs from './typedefs';
+
+import bodyParser from 'body-parser';
+import express from 'express';
+import cors from 'cors';
+
 import resolvers from './resolvers';
+import typeDefs from './typedefs';
 import loaders from './loader';
 
 const schema = makeExecutableSchema({ typeDefs, resolvers });
-
 const app = express();
-
 app.use(cors());
 
-app.use('/graphql', 
-  bodyParser.json(), 
-  graphqlExpress(() => ({ 
+app.use('/graphql',
+  bodyParser.json(),
+  graphqlExpress(() => ({
     schema,
     context: {
       loaders: loaders()

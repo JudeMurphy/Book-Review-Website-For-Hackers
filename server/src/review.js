@@ -1,4 +1,4 @@
-import { groupBy, map } from 'ramda';
+import { groupBy, map } from 'rambda';
 import DataLoader from 'dataloader';
 import query from './db';
 
@@ -9,7 +9,7 @@ const ORDER_BY = {
 
 async function findReviewsByBookIds(ids) {
   const sql = `
-  select * 
+  select *
   from hb.review
   where book_id = ANY($1)
   order by id;

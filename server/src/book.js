@@ -1,4 +1,4 @@
-import { map, groupBy, pathOr } from 'ramda';
+import { map, groupBy, pathOr } from 'rambda';
 import DataLoader from 'dataloader';
 import axios from 'axios';
 import stripTags from 'striptags';
@@ -20,7 +20,7 @@ export async function searchBook(query) {
 
 async function findBooksByIds(ids) {
   const sql = `
-  select * 
+  select *
   from hb.book
   where hb.book.id = ANY($1);
   `;
@@ -44,7 +44,7 @@ export function findBooksByIdsLoader() {
 
 export async function findBookById(id) {
   const sql = `
-  select * 
+  select *
   from hb.book
   where hb.book.id = $1;
   `;
@@ -63,7 +63,7 @@ const ORDER_BY = {
   RATING_DESC: 'rating desc',
 };
 
-export async function allBooks(args) { 
+export async function allBooks(args) {
   const orderBy = ORDER_BY[args.orderBy];
   const sql = `
   select * from hb.book

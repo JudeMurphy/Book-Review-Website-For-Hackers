@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import * as R from 'ramda';
+import * as R from 'rambda';
 import { BookListSection, SORT_BY } from './components/Book';
 import Error from './components/Error';
 import { RecentReviewSection } from './components/Review';

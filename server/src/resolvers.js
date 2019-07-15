@@ -1,14 +1,15 @@
+import { allReviews, createReview } from './review';
+import { authorsByBookId } from './author';
+import { search } from './search';
 import gravatar from 'gravatar';
-import { 
-  allBooks, 
-  imageUrl, 
-  findBookById, 
+
+import {
+  allBooks,
+  imageUrl,
+  findBookById,
   searchBook,
   createBook
  } from './book';
-import { authorsByBookId } from './author';
-import { allReviews, createReview } from './review'; 
-import { search } from './search'; 
 
 const resolvers = {
   User: {

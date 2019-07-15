@@ -1,1 +1,0 @@
-# Hacker Book Review

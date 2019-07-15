@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
-import * as R from 'ramda';
+import * as R from 'rambda';
 import * as EmailValidator from 'email-validator';
 import { Book, BookReviewForm } from './components/Book';
 import Error from './components/Error';

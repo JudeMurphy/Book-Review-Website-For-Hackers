@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
-import { pathOr, map, path } from 'ramda';
+import { pathOr, map, path } from 'rambda';
 import { BookSearchForm, BookSearchResults } from './components/Book';
 import Error from './components/Error';
 import data from './data';

@@ -1,10 +1,10 @@
-import { map, groupBy } from 'ramda';
+import { map, groupBy } from 'rambda';
 import DataLoader from 'dataloader';
 import query from './db';
 
 async function findUsersByIds(ids) {
   const sql = `
-  select * 
+  select *
   from hb.user
   where hb.user.id = ANY($1);
   `;

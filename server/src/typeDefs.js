@@ -3,6 +3,7 @@ schema {
   query: Query
   mutation: Mutation
 }
+
 type Query {
   books(orderBy: BooksOrderBy = RATING_DESC): [Book]
   reviews(orderBy: ReviewsOrderBy = ID_DESC): [Review]
@@ -10,7 +11,13 @@ type Query {
   searchBook(query: String!): [SearchBookResult]
   search(query: String!): [SearchResult]
 }
-union SearchResult =  Book | Review | Author | User  
+
+type Mutation {
+  createReview(reviewInput: ReviewInput!): Review
+  createBook(googleBookId: ID!): Book
+}
+
+union SearchResult =  Book | Review | Author | User
 type SearchBookResult {
   id: ID!
   title: String
@@ -18,10 +25,7 @@ type SearchBookResult {
   authors: [String]
   imageUrl(size: ImageSize = LARGE): String
 }
-type Mutation {
-  createReview(reviewInput: ReviewInput!): Review
-  createBook(googleBookId: ID!): Book
-}
+
 input ReviewInput {
   bookId: ID!
   rating: Int!
