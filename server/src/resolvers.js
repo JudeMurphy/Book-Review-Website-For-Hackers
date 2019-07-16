@@ -34,6 +34,7 @@ const resolvers = {
       return findReviewsByBookIdsLoader.load(book.id);
     }
   },
+  
   Review: {
     book: (review, args, context) => {
       const { loaders } = context;
@@ -46,6 +47,7 @@ const resolvers = {
       return findUsersByIdsLoader.load(review.userId);
     },
   },
+
   Query: {
     books: (root, args) => {
       return allBooks(args);
