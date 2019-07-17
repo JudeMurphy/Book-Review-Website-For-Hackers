@@ -4,8 +4,8 @@ import { findAuthorsByBookIdsLoader } from './author';
 import { findReviewsByBookIdsLoader } from './review';
 
 export default () => ({
-  findAuthorsByBookIdsLoader: findAuthorsByBookIdsLoader(),
   findBooksByIdsLoader: findBooksByIdsLoader(),
   findUsersByIdsLoader: findUsersByIdsLoader(),
+  findAuthorsByBookIdsLoader: findAuthorsByBookIdsLoader(),
   findReviewsByBookIdsLoader: findReviewsByBookIdsLoader(),
 });

@@ -1,6 +1,7 @@
 import { allReviews, createReview } from './review';
 import { authorsByBookId } from './author';
 import { search } from './search';
+
 import gravatar from 'gravatar';
 
 import {
@@ -15,12 +16,7 @@ const resolvers = {
   User: {
     imageUrl: (user, args) => gravatar.url(user.email, { s: args.size }),
   },
-  SearchBookResult: {
-    imageUrl: (result, args) => imageUrl(args.size, result.id),
-  },
-  SearchResult: {
-    __resolveType: obj => obj.__type,
-  },
+
   Book: {
     imageUrl: (book, { size }) => imageUrl(size, book.googleId),
     authors: (book, args, context) => {
@@ -34,7 +30,7 @@ const resolvers = {
       return findReviewsByBookIdsLoader.load(book.id);
     }
   },
-  
+
   Review: {
     book: (review, args, context) => {
       const { loaders } = context;
@@ -46,6 +42,13 @@ const resolvers = {
       const { findUsersByIdsLoader } = loaders;
       return findUsersByIdsLoader.load(review.userId);
     },
+  },
+
+  SearchBookResult: {
+    imageUrl: (result, args) => imageUrl(args.size, result.id),
+  },
+  SearchResult: {
+    __resolveType: obj => obj.__type,
   },
 
   Query: {
@@ -69,6 +72,7 @@ const resolvers = {
       return search(query);
     }
   },
+
   Mutation: {
     createReview: (root, args) => {
       const { reviewInput } = args;

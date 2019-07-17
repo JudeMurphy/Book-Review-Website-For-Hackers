@@ -24,6 +24,7 @@ app.use('/graphql',
   }))
 );
 
+// Use Graphiql to test the server
 app.use('/graphiql', graphiqlExpress({ endpointURL: '/graphql' }));
 
 app.listen(4000, () => {

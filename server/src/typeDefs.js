@@ -8,8 +8,8 @@ type Query {
   books(orderBy: BooksOrderBy = RATING_DESC): [Book]
   reviews(orderBy: ReviewsOrderBy = ID_DESC): [Review]
   book(id: ID!): Book
-  searchBook(query: String!): [SearchBookResult]
   search(query: String!): [SearchResult]
+  searchBook(query: String!): [SearchBookResult]
 }
 
 type Mutation {
@@ -34,14 +34,12 @@ input ReviewInput {
   title: String
   comment: String
 }
-enum ReviewsOrderBy {
-  ID
-  ID_DESC
-}
+
 enum BooksOrderBy {
   RATING_DESC
   ID_DESC
 }
+
 type Review {
   id: ID!
   rating: Int
@@ -50,6 +48,7 @@ type Review {
   book: Book
   user: User
 }
+
 type User {
   id: ID!
   name: String
@@ -75,6 +74,11 @@ type Author {
 enum ImageSize {
   SMALL
   LARGE
+}
+
+enum ReviewsOrderBy {
+  ID
+  ID_DESC
 }
 `;
 

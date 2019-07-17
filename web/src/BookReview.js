@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
-import * as R from 'rambda';
-import * as EmailValidator from 'email-validator';
 import { Book, BookReviewForm } from './components/Book';
+
 import Error from './components/Error';
+
+import * as EmailValidator from 'email-validator';
+import * as R from 'rambda';
 import data from './data';
 import fetch from './fetch';
 
@@ -56,6 +58,7 @@ class BookReview extends Component {
     inputValid: false,
     errors: [],
   };
+
   async componentDidMount() {
     const id = R.path(['props', 'match', 'params', 'id'], this);
     try {
@@ -104,6 +107,7 @@ class BookReview extends Component {
       this.setState({ errors: [err.message] });
     }
   };
+
   render() {
     const { book, reviewInput, inputValid, redirect } = this.state;
     if (!book) return null;

@@ -6,6 +6,7 @@ const pool = new Pool({
   database: 'hackerbook',
 });
 
+// Used to log functions when the server is running - Debugging purposes
 function logQuery (sql, params) {
   console.log('BEGIN-------------------------------------');
   console.log('SQL:', sql);
@@ -13,6 +14,7 @@ function logQuery (sql, params) {
   console.log('END---------------------------------------');
 };
 
+// General Query Function
 async function query(sql, params) {
   const client = await pool.connect();
   logQuery(sql, params);

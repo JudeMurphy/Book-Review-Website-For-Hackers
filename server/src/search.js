@@ -24,13 +24,13 @@ async function searchBooks(term) {
   }
 }
 
-async function searchUser(term) {
+async function searchUser(searchTerm) {
   const sql = `
   select * from hb.user
   where tokens @@ to_tsquery($1);
   `;
   try {
-    const params = [term];
+    const params = [searchTerm];
     const result = await query(sql, params);
     return map(user => ({ ...user, __type: 'User' }), result.rows);
   } catch (err) {

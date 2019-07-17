@@ -1,22 +1,9 @@
 import { map, groupBy, pathOr } from 'rambda';
-import DataLoader from 'dataloader';
-import axios from 'axios';
-import stripTags from 'striptags';
-import query from './db';
 
-export async function searchBook(query) {
-  const url = `https://www.googleapis.com/books/v1/volumes?q=${
-    encodeURIComponent(query)}`;
-  try {
-    const result = await axios(url);
-    const items = pathOr([], ['data', 'items'], result);
-    const books = map(book => ({ id: book.id, ...book.volumeInfo }), items);
-    return books;
-  } catch (err) {
-    console.log(err);
-    throw err;
-  }
-}
+import DataLoader from 'dataloader';
+import stripTags from 'striptags';
+import axios from 'axios';
+import query from './db';
 
 async function findBooksByIds(ids) {
   const sql = `
@@ -118,6 +105,20 @@ async function findBookByGoogleId(googleBookId) {
     const result = await axios(url);
     const book = pathOr({}, ['data'], result);
     return { ...book, ...book.volumeInfo };
+  } catch (err) {
+    console.log(err);
+    throw err;
+  }
+}
+
+export async function searchBook(query) {
+  const url = `https://www.googleapis.com/books/v1/volumes?q=${
+    encodeURIComponent(query)}`;
+  try {
+    const result = await axios(url);
+    const items = pathOr([], ['data', 'items'], result);
+    const books = map(book => ({ id: book.id, ...book.volumeInfo }), items);
+    return books;
   } catch (err) {
     console.log(err);
     throw err;
